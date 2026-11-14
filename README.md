@@ -4,15 +4,13 @@
 
 An attractive, single-page awareness website about creating a **harassment-free workplace** — what workplace harassment is, its types and impact, India's **POSH Act, 2013**, how to speak up, and how employees, managers and organisations can prevent it.
 
-🔗 **Live preview:** Open `index.html` in a browser, or enable GitHub Pages (Settings → Pages → Deploy from branch → `main` / root).
+Built with **React + Vite**, organised as small, reusable components.
 
 ---
 
 ## 📌 About the Project
 
 Workplace harassment is any unwelcome behaviour, comment or action that creates a hostile, intimidating or offensive working environment. This project presents the topic as a clean, image-rich landing page built for awareness — with Indian workplace imagery, a light warm colour palette, and a low-opacity background layer so the content stays easy to read.
-
-The page is intentionally **simple**: no forms, no backend, no build step — just HTML, CSS and a little JavaScript.
 
 ## ✨ Features
 
@@ -22,9 +20,9 @@ The page is intentionally **simple**: no forms, no backend, no build step — ju
 - **Impact section** — on individuals, teams and the organisation
 - **Speak Up guide** — 5 practical steps to report harassment
 - **Bystander intervention** — the 5 D's (Direct, Distract, Delegate, Document, Delay)
-- **Role-wise prevention tabs** — for Employees, Managers and Organisations & HR
+- **Role-wise prevention tabs** — for Employees, Managers and Organisations & HR (React state)
 - **POSH Act, 2013 deep-dive** — ICC, complaint timelines, employer duties and penalties
-- **"Spot It" scenario check** — 5 short interactive scenarios
+- **"Spot It" scenario check** — 5 short interactive scenarios (React state)
 - **Myths vs Facts** and **FAQs**
 - **Help contacts** — 112 (Emergency), 1091 / 181 (Women Helpline), NCW and the SHe-Box portal
 - Fully **responsive** — works on desktop and mobile, with light/dark colour-scheme support
@@ -33,18 +31,35 @@ The page is intentionally **simple**: no forms, no backend, no build step — ju
 
 ```
 workplace_harassment-/
-├── index.html                # Landing page markup (all sections)
-├── README.md                 # Project documentation
-├── .gitignore
-├── assets/
-│   ├── css/
-│   │   └── style.css         # Complete stylesheet (light warm palette,
-│   │                         #   low-opacity background-image layers)
-│   └── js/
-│       └── main.js           # Scenario check + prevention tabs logic
-└── docs/
-    └── topic-deep-dive.md    # Detailed topic notes: definitions, types,
-                              #   POSH Act, prevention framework
+├── index.html                  # Vite entry page (fonts, meta, #root)
+├── package.json
+├── vite.config.js              # Vite + React plugin, base './'
+├── README.md
+├── .gitignore                  # node_modules/, dist/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # Auto build + deploy to GitHub Pages on push to main
+├── docs/
+│   └── topic-deep-dive.md      # Detailed topic notes: definitions, types, POSH Act, prevention
+└── src/
+    ├── main.jsx                # React entry point
+    ├── App.jsx                 # Page composition (all sections in order)
+    ├── index.css               # Complete stylesheet (light warm palette,
+    │                           #   low-opacity background-image layers)
+    ├── data/
+    │   └── scenarios.js        # Data for the "Spot It" scenario check
+    └── components/
+        ├── Navbar.jsx
+        ├── Hero.jsx
+        ├── WhatIs.jsx          # What is workplace harassment?
+        ├── Types.jsx           # 6 types of harassment
+        ├── Impact.jsx
+        ├── SpeakUp.jsx         # Step-by-step guide + scenario check (useState)
+        ├── Roles.jsx           # Prevention tabs — Employees / Managers / Organisations (useState)
+        ├── Law.jsx             # POSH Act, 2013
+        ├── Faq.jsx
+        ├── Help.jsx            # Helplines & support
+        └── Footer.jsx
 ```
 
 **Design notes**
@@ -52,41 +67,47 @@ workplace_harassment-/
 - Indian professionals in all photographs — no stock foreign imagery
 - Background photographs are layered at **5–14% opacity** behind sections so text remains fully readable
 - Colour palette: soft peach background, deep maroon primary, terracotta accents, marigold highlights
-- Images are embedded in the page/styles for portability, so the site works offline with no external image dependencies (Google Fonts requires an internet connection)
+- Images are embedded in the page/styles for portability (Google Fonts requires an internet connection)
 
 ## 🚀 How to Run
 
-No installation or build step is needed.
-
-**Option 1 — Directly**
+**Prerequisite:** Node.js 18 or newer
 
 ```bash
 # Clone the repository
 git clone https://github.com/jomkarrr/workplace_harassment-.git
+cd workplace_harassment-
 
-# Open index.html in your browser
+# Install dependencies
+npm install
+
+# Start the development server (http://localhost:5173)
+npm run dev
 ```
 
-**Option 2 — Local server (recommended)**
+**Production build**
 
 ```bash
-# From the project root
-python3 -m http.server 8000
-# Visit http://localhost:8000
+npm run build     # outputs the static site to dist/
+npm run preview   # preview the production build locally
 ```
 
-**Option 3 — GitHub Pages**
+## 🌐 Deployment — GitHub Pages
 
-1. Go to **Settings → Pages**
-2. Source: **Deploy from a branch** → `main` → `/ (root)`
-3. Save — your site will be published on GitHub Pages
+This repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that
+builds the Vite app and deploys it to **GitHub Pages** on every push to `main`.
 
-## 🛠️ Built With
+One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+After that, every push to `main` automatically publishes the latest build.
 
-- **HTML5** — semantic, accessible markup
-- **CSS3** — custom properties, responsive layout, background layers
-- **JavaScript (Vanilla)** — interactive scenario check and tabs
+## 🛠️ Tech Stack
+
+- **React 18** — component-based UI, `useState` for the tabs and scenario check
+- **Vite 5** — dev server and production build
+- **CSS3 (Vanilla)** — custom properties, responsive layout, background layers; no CSS framework
+- **JavaScript (ES Modules / JSX)**
 - **Google Fonts** — DM Serif Display + Plus Jakarta Sans
+- **GitHub Actions** — CI build + GitHub Pages deployment
 
 ## 📚 Content Sources
 
