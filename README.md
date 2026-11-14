@@ -38,7 +38,8 @@ workplace_harassment-/
 ├── .gitignore                  # node_modules/, dist/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # Auto build + deploy to GitHub Pages on push to main
+│       └── deploy.yml          # Auto build + deploy to GitHub Pages
+│                               #   (add this one file manually — see Deployment below)
 ├── docs/
 │   └── topic-deep-dive.md      # Detailed topic notes: definitions, types, POSH Act, prevention
 └── src/
@@ -94,11 +95,17 @@ npm run preview   # preview the production build locally
 
 ## 🌐 Deployment — GitHub Pages
 
-This repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that
-builds the Vite app and deploys it to **GitHub Pages** on every push to `main`.
+A GitHub Actions workflow (`.github/workflows/deploy.yml`) builds the Vite app and
+deploys it to **GitHub Pages** on every push to `main`.
 
-One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+One-time setup:
+1. Add the workflow file in the GitHub web UI — **Add file → Create new file**,
+   name it `.github/workflows/deploy.yml` (app-based pushes cannot create workflow
+   files, so this one file is added manually).
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
 After that, every push to `main` automatically publishes the latest build.
+Alternatively, deploy the `dist/` output of `npm run build` to Vercel or Netlify.
 
 ## 🛠️ Tech Stack
 
